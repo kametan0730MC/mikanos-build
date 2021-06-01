@@ -119,12 +119,13 @@
         dest: "{{ ansible_env.HOME }}/qemu"
         version: "v6.0.0"
         
-    - name: configure qemu
-      command: "{{ ansible_env.HOME }}/qemu/configure"
-      
     - name: build qemu
-      make:
+      shell: "{{ item }}"
+      args:
         chdir: "{{ ansible_env.HOME }}/qemu/"
+      with_items:
+      - ./configure --target-list=x86_64-softmmu
+      - make
 
     - name: clone EDK II repository
       git:
