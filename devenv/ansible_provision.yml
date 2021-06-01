@@ -126,6 +126,12 @@
       with_items:
       - ./configure --target-list=x86_64-softmmu
       - make
+      
+    - name: configure qemu path
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.profile"
+        regexp: "^export PATH=$PATH:~/qemu"
+        line: "export PATH=$PATH:~/qemu/build/"
 
     - name: clone EDK II repository
       git:
